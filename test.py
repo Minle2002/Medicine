@@ -1,6 +1,6 @@
 import requests
 
-url = "http://127.0.0.1:5000/medicine"
+url = "https://medicine-production-8a43.up.railway.app/medicine"
 
 # Example JSON data
 data = {

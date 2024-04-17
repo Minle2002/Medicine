@@ -1,8 +1,10 @@
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import json
 from difflib import get_close_matches
-from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+CORS(app)
 
 def load_disease_advice():
     try:
@@ -40,4 +42,5 @@ def detect_medicine():
         return jsonify({"error": "Missing 'medicine' key in the request."}), 400
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
