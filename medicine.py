@@ -16,10 +16,15 @@ with open('medicine.csv') as csvfile:
 
         # If medicine is not in dictionary, add it
         if medicine not in medicine_data:
-            medicine_data[medicine] = {'Uses': text, 'Side Effects': side_effects}
-        else:
-            # Update side effects for existing medicine
-            medicine_data[medicine]['Side Effects'].extend(side_effects)
+            medicine_data[medicine] = {'Uses': [], 'Side Effects': []}
+
+        # Append uses and side effects
+        medicine_data[medicine]['Uses'].append(text)
+        medicine_data[medicine]['Side Effects'].extend(side_effects)
+
+# Convert uses to a comma-separated string
+for medicine in medicine_data.values():
+    medicine['Uses'] = ', '.join(set(medicine['Uses']))
 
 # Remove duplicate side effects for each medicine
 for medicine in medicine_data.values():

@@ -1,5 +1,8 @@
 import json
 from difflib import get_close_matches
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
 
 def load_disease_advice():
     try:
@@ -15,16 +18,26 @@ def find_close_matches(input_str, data, cutoff=0.5, n=10):
     matches_info = [(match, data[match]) for match in close_matches]
     return matches_info
 
-input_med = "Halosys -S Ointment"
-disease_info = load_disease_advice()
-matched_info = find_close_matches(input_med, disease_info)
-
-if matched_info:
-    print("Close matches found:")
-    for match, info in matched_info:
-        print(f"Medicine: {match}")
-        print("Information:")
-        print(info)
-        print()
-else:
-    print("No matching information found.")
+@app.route('/medicine', methods=['POST'])
+def detect_medicine():
+    data = request.json
+    
+    if 'medicine' in data:
+        input_med = data['medicine']
+        disease_info = load_disease_advice()
+        matched_info = find_close_matches(input_med, disease_info)
+        if matched_info:
+            response_data = {
+                "matches": [
+                    {"medicine": match, "Uses": info['Uses'], "Side Effects": info['Side Effects']}
+                    for match, info in matched_info
+                ]
+            }
+            return jsonify(response_data), 200
+        else:
+            return jsonify({"message": "No matching information found."}), 404
+    else:
+        return jsonify({"error": "Missing 'medicine' key in the request."}), 400
+    
+if __name__ == "__main__":
+    app.run(debug=True)
