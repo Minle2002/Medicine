@@ -15,7 +15,7 @@ def load_disease_advice():
         print(f"Failed to load disease advice data: {e}")
         return {}
     
-def find_close_matches(input_str, data, cutoff=0.5, n=10):
+def find_close_matches(input_str, data, cutoff=0.5, n=1):
     keys = list(data.keys())
     close_matches = get_close_matches(input_str, keys, n=n, cutoff=cutoff)
     matches_info = [(match, data[match]) for match in close_matches]

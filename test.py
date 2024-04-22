@@ -1,10 +1,9 @@
 import requests
 
-url = "https://medicine-production-8a43.up.railway.app/medicine"
+url = "http://127.0.0.1:5000/medicine"
 
-# Example JSON data
 data = {
-    "medicine": 'Acrotac 25mg Capsule'
+    "medicine": 'Avastin 400mg Injection'
 }
 
 response = requests.post(url, json=data)
