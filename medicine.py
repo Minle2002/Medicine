@@ -6,7 +6,7 @@ medicine_data = {}
 with open('medicine.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        medicine = row['Medicine Name']
+        medicine = row['Medicine Name'].lower()  # Convert to lowercase
         text = row['Uses']
         response = row['Side_effects']
 
