@@ -43,7 +43,7 @@ def detect_medicine():
         if matched_info:
             response_data = {
                 "matches": [
-                    {"edicine": match, "Uses": info['Uses'], "Possible Side Effects Include:": info['Side Effects']}
+                    {"medicine": match, "Uses": info['Uses'], "Side Effects:": info['Side Effects']}
                     for match, info in matched_info
                 ]
             }
